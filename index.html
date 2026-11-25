@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ห้องสืบค้น บทที่ 2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Mali:wght@400;600;700&family=Anuphan:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* VOICE: playful, sweet, encouraging — a teen's decorated study notebook
+   IDEA: sticker book + washi tape + highlighter doodles around a working search tool
+   PICTURE: the search box as a big sticker card on a candy band with sparkle doodles
+   COLOUR and TYPE: pastel candy palette (lilac, bubblegum pink, mint, butter) fixed in both themes; Mali rounded Thai type
+   LAYOUT: search band → steps → sticker catalog with pill filters → tools → checklist → outline */
+:root{color-scheme:light dark;
+--bg:light-dark(#fff6fb,#1c1430);--ink:light-dark(#2d2140,#f6eefe);--mut:light-dark(#6e5f84,#c7b8dc);
+--pk:#ff6fae;--li:#b79cff;--mi:#7fe0c4;--bu:#ffe27a;--sky:#8fd3ff;
+--co:light-dark(#e8478f,#ff8fc2);--co2:light-dark(#fde6f1,#33244f);--hl:#ffe27a;--line:light-dark(#2d2140,#f6eefe);--soft:light-dark(#eadff5,#3c2d5c);--card:light-dark(#ffffff,#271c40)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:16.5px/1.7 Mali,Anuphan,system-ui,sans-serif;overflow-x:clip;
+background-image:radial-gradient(light-dark(#f3d9ea,#2e2148) 1.2px,transparent 1.4px);background-size:22px 22px}
+.band{padding:clamp(28px,4vw,64px) max(5vw,16px)}
+.wrap{max-width:1240px;margin:0 auto;position:relative}
+h1,h2,h3{font-family:Mali,Anuphan,sans-serif;font-weight:700;line-height:1.2;text-wrap:balance;margin:0 0 .45em}
+h1{font-size:clamp(32px,5vw,52px)}h2{font-size:clamp(26px,3vw,34px)}h3{font-size:19px;font-weight:600}
+h2{display:inline-block;background:linear-gradient(transparent 58%,var(--bu) 58%);color:var(--ink);padding:0 .15em}
+:root[data-theme=dark] h2{background:linear-gradient(transparent 62%,#7a5cc7 62%)}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]) h2{background:linear-gradient(transparent 62%,#7a5cc7 62%)}}
+p{margin:0 0 1em;max-width:70ch}
+a{color:inherit}
+mark{background:var(--hl);color:#2d2140;padding:0 .3em;border-radius:6px}
+html{scroll-padding-top:72px}
+nav{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:2px dashed var(--soft)}
+.scroll{overflow-x:auto;display:flex;gap:6px;padding:8px max(5vw,16px)}.scroll a{flex:none;text-decoration:none;padding:8px 14px;border-radius:99px;font-weight:600;font-size:15px;border:2px solid transparent}
+.scroll a:hover,.scroll a:focus-visible{background:var(--co2);border-color:var(--pk)}
+#hero{background:linear-gradient(135deg,#c9b5ff 0%,#ffb3d4 55%,#ffd9a8 100%);color:#2d2140;position:relative;overflow:hidden}
+#hero p{color:#3f2f57}
+#hero h1 em{font-style:normal;background:#fff;border:2.5px solid #2d2140;border-radius:14px;padding:0 .25em;box-shadow:4px 4px 0 #2d2140;display:inline-block;transform:rotate(-2deg)}
+.doodle{position:absolute;pointer-events:none}
+.d1{top:18px;right:4%;width:clamp(70px,10vw,120px);animation:bob 4s ease-in-out infinite}
+.d2{top:46%;right:1%;width:42px}.d3{bottom:14px;left:52%;width:34px}
+@keyframes bob{50%{transform:translateY(-8px) rotate(6deg)}}
+.sbox{background:#fff;color:#2d2140;border:2.5px solid #2d2140;border-radius:24px;padding:clamp(16px,3vw,28px);margin-top:22px;box-shadow:8px 8px 0 #2d2140;position:relative}
+.sbox::before{content:"";position:absolute;top:-14px;left:36px;width:110px;height:26px;background:repeating-linear-gradient(45deg,#7fe0c4 0 8px,#b7f0de 8px 16px);opacity:.92;transform:rotate(-4deg);border-radius:3px}
+.srow{display:flex;gap:10px;flex-wrap:wrap}
+input,select,textarea{font:inherit;font-size:16px;color:inherit;background:var(--card);border:2.5px solid var(--soft);border-radius:14px;padding:10px 14px;min-height:44px;width:100%}
+input:focus,select:focus,textarea:focus{border-color:var(--li)}
+.sbox input{background:#fff;color:#2d2140;border-color:#d9c9f5;font-size:18px;flex:1 1 280px}
+input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-visible,a:focus-visible{outline:3px solid var(--li);outline-offset:2px}
+button{font:inherit;font-weight:700;min-height:44px;padding:8px 18px;border-radius:99px;border:2.5px solid #2d2140;background:var(--pk);color:#fff;cursor:pointer;box-shadow:3px 3px 0 #2d2140;transition:transform .12s,box-shadow .12s}
+button:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 #2d2140}
+button:active{transform:translate(2px,2px);box-shadow:1px 1px 0 #2d2140}
+button.ghost{background:var(--mi);color:#2d2140}
+.hint{font-size:14px;color:#6e5f84;margin:12px 0 0}
+.dbs{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,200px),1fr));gap:12px;margin-top:16px}
+.db{display:flex;flex-direction:column;justify-content:center;gap:2px;text-decoration:none;border:2.5px solid #2d2140;border-radius:16px;padding:10px 14px;min-height:64px;background:#efe8ff;transition:transform .15s}
+.db:nth-child(3n+2){background:#e3f8f1}.db:nth-child(3n){background:#e6f4ff}
+.db b{font-size:16px}.db span{font-size:13px;color:#6e5f84}
+.db:hover{transform:translateY(-3px) rotate(-1deg)}
+.db.th{background:#ffe3ef!important}
+.syn{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.syn span{font-size:14px;background:#fff3c4;border:2px dashed #e8c64a;border-radius:99px;padding:3px 12px}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:16px;margin-top:18px}
+.step{background:var(--card);border:2.5px solid var(--line);border-radius:20px;padding:16px 18px;box-shadow:5px 5px 0 var(--li)}
+.step:nth-child(2){box-shadow:5px 5px 0 var(--pk);transform:rotate(1deg)}.step:nth-child(3){box-shadow:5px 5px 0 var(--mi)}
+.step:nth-child(4){box-shadow:5px 5px 0 var(--sky);transform:rotate(-1deg)}.step:nth-child(5){box-shadow:5px 5px 0 var(--bu)}
+.step strong{display:block;font-weight:700;font-size:18px;margin-bottom:4px}
+.step p{font-size:15.5px;color:var(--mut);margin:0}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 20px}
+.chips button{background:var(--card);color:var(--ink);border-color:var(--line);font-weight:600;box-shadow:2px 2px 0 var(--line)}
+.chips button[aria-pressed=true]{background:var(--li);color:#2d2140;border-color:#2d2140}
+.cat{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,290px),1fr));gap:18px}
+.res{background:var(--card);border:2.5px solid var(--line);border-radius:22px;padding:20px;display:flex;flex-direction:column;box-shadow:6px 6px 0 var(--soft);transition:transform .15s}
+.res:hover{transform:rotate(-.6deg) translateY(-2px)}
+.res h3{margin:0 0 6px}.res .tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.tag{font-size:13px;border-radius:99px;padding:1px 10px;background:#efe8ff;color:#4a3a66;font-weight:600}
+.tag:nth-of-type(3n+2){background:#e3f8f1;color:#1f5c4b}.tag:nth-of-type(3n){background:#e6f4ff;color:#21507a}
+.tag.star{background:var(--bu)!important;color:#2d2140!important;border:2px solid #2d2140}
+.res p{font-size:15px;color:var(--mut);margin:0 0 10px}
+.res .tip{font-size:14.5px;background:light-dark(#fff8d9,#3a2f1f);border-radius:12px;padding:8px 12px;color:var(--ink);margin-bottom:14px}
+.res a.go{margin-top:auto;align-self:flex-start;font-weight:700;text-decoration:none;background:var(--pk);color:#fff;border:2.5px solid #2d2140;border-radius:99px;padding:6px 16px;box-shadow:3px 3px 0 #2d2140}
+.alt{background:light-dark(rgba(236,226,255,.7),rgba(45,32,72,.7))}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:28px;align-items:start}
+.panel{background:var(--card);border:2.5px solid var(--line);border-radius:24px;padding:clamp(16px,2.5vw,26px);box-shadow:7px 7px 0 var(--li)}
+.two .panel+.panel{box-shadow:7px 7px 0 var(--mi)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));gap:10px}
+label{font-size:14px;font-weight:600;display:block;margin:8px 0 4px}
+.out{background:light-dark(#fdf4ff,#1f1633);border:2.5px dashed var(--li);border-radius:16px;padding:12px 14px;margin:14px 0 10px;min-height:56px;overflow-wrap:anywhere}
+.out i{font-style:italic}
+.btns{display:flex;flex-wrap:wrap;gap:10px}
+.log{list-style:none;padding:0;margin:16px 0 0;display:grid;gap:10px}
+.log li{border:2px solid var(--soft);background:light-dark(#fffafd,#2f2249);border-radius:14px;padding:10px 12px;font-size:15px;position:relative;padding-right:56px}
+.log li .x{position:absolute;top:6px;right:6px;min-height:36px;padding:2px 12px;background:var(--card);color:var(--ink);box-shadow:none;border-width:2px}
+.empty{color:var(--mut);font-size:15px}
+.check{list-style:none;padding:0;margin:0;display:grid;gap:10px}
+.check label{display:flex;gap:12px;align-items:flex-start;font-size:16px;font-weight:400;margin:0;cursor:pointer;background:var(--card);border:2px solid var(--soft);border-radius:14px;padding:10px 12px}
+.check input{width:22px;height:22px;min-height:0;flex:none;margin-top:3px;accent-color:#e8478f}
+.outline{counter-reset:o;list-style:none;padding:0;margin:0;display:grid;gap:12px}
+.outline li{padding:14px 16px 14px 70px;background:var(--card);border:2.5px solid var(--line);border-radius:18px;position:relative}
+.outline li::before{counter-increment:o;content:"2." counter(o);position:absolute;left:12px;top:12px;font-weight:700;background:var(--bu);color:#2d2140;border:2px solid #2d2140;border-radius:12px;padding:0 8px}
+.outline li:nth-child(even)::before{background:var(--mi)}
+.ok{font-size:14px;color:var(--mut);min-height:1.4em;margin:6px 0 0;font-weight:600}
+footer{border-top:2px dashed var(--soft);font-size:14px;color:var(--mut)}
+@media(max-width:600px){.dbs{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.db{min-height:56px;padding:8px 10px}.d2,.d3{display:none}.d1{width:64px;top:10px}.step{transform:none!important}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.who{background:light-dark(#f2ecff,#2f2249);border:2px dashed var(--li);border-radius:16px;padding:4px 14px 6px;margin:4px 0 12px}
+.warn{background:light-dark(#fff8d9,#3a2f1f);border:2px solid var(--bu);border-radius:14px;padding:10px 14px;font-size:14.5px;margin-top:6px}
+button.wipe{background:var(--card);color:var(--ink)}button.wipe.arm{background:#ff8a8a;color:#2d2140}
+.foot{display:flex;align-items:center;gap:18px}
+.foot svg{width:48px;height:48px;flex:none}
+.foot p{margin:0;line-height:1.6;color:var(--mut)}
+.foot .fname{font-size:20px;font-weight:700;color:var(--ink);margin-bottom:2px}
+@media(max-width:600px){.foot{align-items:flex-start}.foot svg{width:36px;height:36px}}
+</style>
+</head>
+<body>
+<nav aria-label="หมวดในหน้า"><div class="scroll">
+<a href="#hero">ค้นหาพร้อมกัน</a><a href="#how">วิธีสืบค้น</a><a href="#catalog">คลังแหล่งสืบค้น</a><a href="#tools">ทำรายการอ้างอิง</a><a href="#check">เช็กความน่าเชื่อถือ</a><a href="#outline">โครงบทที่ 2</a>
+</div></nav>
+
+<section id="hero" class="band"><svg class="doodle d1" viewBox="0 0 100 100" aria-hidden="true"><g fill="#fff" stroke="#2d2140" stroke-width="4" stroke-linejoin="round"><path d="M50 4 C54 38 62 46 96 50 C62 54 54 62 50 96 C46 62 38 54 4 50 C38 46 46 38 50 4Z"/></g></svg>
+<svg class="doodle d2" viewBox="0 0 100 100" aria-hidden="true"><g fill="#ffe27a" stroke="#2d2140" stroke-width="6" stroke-linejoin="round"><path d="M50 4 C54 38 62 46 96 50 C62 54 54 62 50 96 C46 62 38 54 4 50 C38 46 46 38 50 4Z"/></g></svg>
+<svg class="doodle d3" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="40" fill="#7fe0c4" stroke="#2d2140" stroke-width="7"/></svg><div class="wrap">
+<h1>ห้องสืบค้น <em>บทที่ 2</em><br>เอกสารและงานวิจัยที่เกี่ยวข้อง</h1>
+<p>พิมพ์หัวข้อโครงงานของเรา แล้วกดเปิดฐานข้อมูลได้ทีละแห่ง ไม่ต้องพิมพ์คำค้นซ้ำ ลองทั้งคำภาษาไทยและภาษาอังกฤษเพื่อให้ได้แหล่งข้อมูลครบขึ้น</p>
+<div class="sbox">
+<form id="sf" class="srow" autocomplete="off">
+<input id="q" type="search" placeholder="เช่น การจำแนกพันธุ์ไม้ด้วยปัญญาประดิษฐ์" aria-label="คำค้น">
+<button type="submit">ค้นใน Google Scholar</button>
+</form>
+<div class="syn" id="syn" aria-live="polite"></div>
+<div class="dbs" id="dbs"></div>
+<p class="hint">ช่องสีชมพู = แหล่งข้อมูลภาษาไทย · ลิงก์จะเปิดในแท็บใหม่ · ใส่ "เครื่องหมายคำพูด" ครอบวลีเพื่อค้นแบบตรงตัว</p>
+</div>
+</div></section>
+
+<section id="how" class="band"><div class="wrap">
+<h2>สืบค้นให้ได้ผลใน 5 ขั้น</h2>
+<div class="steps">
+<div class="step"><strong>1. แตกหัวข้อเป็นคำสำคัญ</strong><p>เลือก 2–4 คำที่เป็นหัวใจของโครงงาน เช่น "ถุงมือ" + "เซนเซอร์แรงกด" + "ผู้สูงอายุ"</p></div>
+<div class="step"><strong>2. หาคำพ้องและคำอังกฤษ</strong><p>คำเดียวกันอาจเขียนต่างกัน เช่น ปัญญาประดิษฐ์ / AI / machine learning จดไว้ใช้ค้นสลับกัน</p></div>
+<div class="step"><strong>3. ใช้ตัวเชื่อม AND OR NOT</strong><p>AND ให้แคบลง, OR ให้กว้างขึ้น, NOT ตัดเรื่องที่ไม่เกี่ยว เช่น <mark>plant AND classification NOT disease</mark></p></div>
+<div class="step"><strong>4. กรองปีและประเภท</strong><p>เน้นงานย้อนหลังไม่เกิน 5–10 ปี เลือกบทความวิจัย วิทยานิพนธ์ หรือหนังสือวิชาการ</p></div>
+<div class="step"><strong>5. อ่านบทคัดย่อแล้วจดทันที</strong><p>อ่านบทคัดย่อก่อนตัดสินใจโหลดฉบับเต็ม แล้วบันทึกลงแบบฟอร์มด้านล่างพร้อมข้อมูลอ้างอิง</p></div>
+</div>
+</div></section>
+
+<section id="catalog" class="band alt"><div class="wrap">
+<h2>คลังแหล่งสืบค้นที่ใช้ได้ฟรี</h2>
+<p>คัดมาจากรายการ 25 เว็บไซต์วิทยานิพนธ์และงานวิจัยของ Eduzones (LINE TODAY) และคลัง Chula DigiVerse เลือกเฉพาะแหล่งที่นักเรียน ม.4 ใช้ได้จริง ป้าย <span class="tag star">แนะนำ ม.4</span> คือแหล่งที่ควรเริ่มก่อน</p>
+<div class="chips" id="chips" role="group" aria-label="กรองแหล่งข้อมูล"></div>
+<div class="cat" id="cat"></div>
+</div></section>
+
+<section id="tools" class="band"><div class="wrap two">
+<div class="panel">
+<h2>สร้างรายการอ้างอิง (APA 7)</h2>
+<p style="font-size:15px;color:var(--mut)">ใช้รูปแบบตามคู่มือ <a href="https://so02.tci-thaijo.org/index.php/EDUCU/article/view/153329/111738" target="_blank" rel="noopener">การอ้างอิงสารสนเทศตามแบบ APA (7th edition)</a> วารสารครุศาสตร์ จุฬาลงกรณ์มหาวิทยาลัย</p>
+<div class="grid2">
+<div><label for="t">ประเภท</label><select id="t"><option value="j">บทความวารสาร</option><option value="th">วิทยานิพนธ์</option><option value="b">หนังสือ</option><option value="w">เว็บไซต์</option></select></div>
+<div><label for="lg">ภาษา</label><select id="lg"><option value="th">ภาษาไทย</option><option value="en">ภาษาอังกฤษ</option></select></div>
+</div>
+<label for="au" id="aul">ผู้แต่ง (คั่นแต่ละคนด้วย ; )</label><input id="au" placeholder="สมชาย ใจดี; สุดา รักเรียน">
+<div class="grid2"><div><label for="yr">ปีที่พิมพ์</label><input id="yr" inputmode="numeric" placeholder="2566"></div><div><label for="vi" id="vil">ปีที่ (ฉบับที่)</label><input id="vi" placeholder="12(2)"></div></div>
+<label for="ti">ชื่อเรื่อง</label><input id="ti" placeholder="ชื่อบทความหรือชื่อหนังสือ">
+<label for="so" id="sol">ชื่อวารสาร</label><input id="so" placeholder="วารสารวิทยาศาสตร์และเทคโนโลยี">
+<div class="grid2"><div><label for="pg" id="pgl">เลขหน้า</label><input id="pg" placeholder="45-60"></div><div><label for="url">ลิงก์ / DOI</label><input id="url" placeholder="https://..."></div></div>
+<div id="dbw"><label for="db">ชื่อฐานข้อมูล / คลังข้อมูล (ถ้ามี)</label><input id="db" placeholder="คลังปัญญาจุฬาฯ (CUIR) หรือ ProQuest"></div>
+<label style="margin-top:14px">รายการอ้างอิง (ท้ายเล่ม)</label>
+<div class="out" id="ref" aria-live="polite" style="margin-top:4px"></div>
+<label>การอ้างอิงในเนื้อหา</label>
+<div class="out" id="cit" aria-live="polite" style="margin-top:4px"></div>
+<div class="btns"><button id="cp" type="button">คัดลอกรายการอ้างอิง</button><button id="cp2" type="button" class="ghost">คัดลอกอ้างอิงในเนื้อหา</button><button id="add" type="button" class="ghost">เพิ่มเข้าบันทึกการอ่าน</button></div>
+<p class="ok" id="okmsg"></p>
+</div>
+<div class="panel">
+<h2>บันทึกการอ่านของฉัน</h2>
+<p style="color:var(--mut);font-size:15px">จดสาระสำคัญของแต่ละแหล่งที่อ่าน เมื่อได้ 5–10 แหล่ง ก็เอาไปเรียบเรียงเป็นบทที่ 2 ได้</p>
+<div class="who">
+<label for="who">ชื่อ เลขที่ กลุ่ม (กรอกก่อนเริ่มบันทึก)</label>
+<div class="srow"><input id="who" placeholder="เช่น ปิยะ 12 กลุ่ม 3" autocomplete="off" style="flex:1 1 200px"><button id="whoset" type="button">เริ่มใช้</button></div>
+<p class="ok" id="whonow" aria-live="polite"></p>
+</div>
+<label for="note">สาระสำคัญที่ได้ (สรุปด้วยภาษาของตัวเอง)</label>
+<textarea id="note" rows="3" placeholder="งานนี้ศึกษาอะไร ใช้วิธีใด ได้ผลอย่างไร เกี่ยวกับโครงงานเราอย่างไร"></textarea>
+<div class="btns" style="margin-top:10px"><button id="save" type="button">บันทึก (ใช้รายการอ้างอิงด้านซ้าย)</button><button id="cpall" type="button" class="ghost">คัดลอกทั้งหมด</button></div>
+<p class="ok" id="logmsg" aria-live="polite"></p>
+<div class="warn"><b>ก่อนปิดเว็บทุกครั้ง</b> กด "คัดลอกทั้งหมด" แล้ววางเก็บใน Google Docs หรือสมุดของกลุ่ม เพราะบันทึกเก็บไว้ในเบราว์เซอร์เครื่องนี้เท่านั้น ถ้าใช้เครื่องของห้องคอมพิวเตอร์ ให้กด "ล้างข้อมูลของฉัน" ก่อนลุกจากเครื่อง</div>
+<ul class="log" id="log"></ul>
+<div class="btns" style="margin-top:14px"><button id="wipe" type="button" class="ghost wipe">ล้างข้อมูลของฉันจากเครื่องนี้</button></div>
+</div>
+</div></section>
+
+<section id="check" class="band alt"><div class="wrap two">
+<div>
+<h2>เช็กก่อนใช้: แหล่งนี้น่าเชื่อถือไหม</h2>
+<p>ติ๊กให้ครบอย่างน้อย 4 ข้อ ก่อนนำข้อมูลไปใส่ในบทที่ 2</p>
+<ul class="check" id="cl"></ul>
+<p class="ok" id="score"></p>
+</div>
+<div class="panel">
+<h3>เขียนบทที่ 2 ให้ไม่ผิดกติกา</h3>
+<p style="font-size:15.5px">สรุปด้วยภาษาของตัวเองทุกครั้ง ถ้ายกข้อความมาตรงตัวให้ใส่ "เครื่องหมายคำพูด" และระบุเลขหน้า ทุกย่อหน้าที่นำความคิดผู้อื่นมาต้องมีการอ้างอิงในเนื้อหา เช่น <mark>(สมชาย ใจดี, 2566)</mark> หรือ <mark>(Smith, 2023)</mark> และทุกแหล่งที่อ้างในเนื้อหาต้องปรากฏในบรรณานุกรมท้ายเล่ม</p>
+<p style="font-size:15.5px;margin:0">AI ช่วยแนะนำคำค้นหรืออธิบายเนื้อหาได้ แต่ห้ามใช้ AI สร้างรายการอ้างอิง เพราะอาจแต่งชื่องานที่ไม่มีอยู่จริง ให้เปิดดูแหล่งจริงทุกครั้ง</p>
+</div>
+</div></section>
+
+<section id="outline" class="band"><div class="wrap">
+<h2>โครงบทที่ 2 ที่พบบ่อย</h2>
+<p>ปรับหัวข้อตามเรื่องของกลุ่ม โดยเรียงจากหลักการกว้างไปหางานที่ใกล้โครงงานเราที่สุด</p>
+<ol class="outline">
+<li><b>ความรู้พื้นฐานของเรื่องที่ศึกษา</b> — นิยาม ความสำคัญ ปัญหาที่เกี่ยวข้อง (หนังสือ บทความวิชาการ เว็บหน่วยงาน)</li>
+<li><b>หลักการ ทฤษฎี หรือเทคโนโลยีที่ใช้</b> — เช่น เซนเซอร์ บอร์ดไมโครคอนโทรลเลอร์ โมเดล AI ภาษาโปรแกรม</li>
+<li><b>เครื่องมือหรือวิธีการที่ใช้ในโครงงาน</b> — ซอฟต์แวร์ อุปกรณ์ วิธีเก็บข้อมูล</li>
+<li><b>งานวิจัยที่เกี่ยวข้อง</b> — สรุป 3–5 งาน ว่าใครทำ ทำอะไร ใช้วิธีใด ได้ผลอย่างไร (ThaiJo, Google Scholar, คลังวิทยานิพนธ์)</li>
+<li><b>สรุปและช่องว่างที่โครงงานเราจะเติม</b> — งานเดิมยังขาดอะไร โครงงานเราต่างหรือต่อยอดอย่างไร</li>
+</ol>
+</div></section>
+
+<footer class="band"><div class="wrap foot">
+<svg viewBox="0 0 100 100" aria-hidden="true"><path d="M50 4 C54 38 62 46 96 50 C62 54 54 62 50 96 C46 62 38 54 4 50 C38 46 46 38 50 4Z" fill="#ffe27a" stroke="#2d2140" stroke-width="6" stroke-linejoin="round"/></svg>
+<div>
+<p class="fname">ห้องสืบค้น บทที่ 2</p>
+<p>สำหรับนักเรียน ม.4 วิชาโครงงาน</p>
+<p>ครูผ่องอำไพ ธรรมอริยสกุล</p>
+<p>โรงเรียนเบญจมราชูทิศ จังหวัดปัตตานี</p>
+</div>
+</div></footer>
+
+<script>
+{
+const E=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const $=id=>document.getElementById(id);
+const store={get(k,d){try{return JSON.parse(localStorage.getItem(k))??d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+
+const DBS=[
+['Google Scholar','ไทย+อังกฤษ ทุกสาขา','https://scholar.google.com/scholar?q=',1,'https://scholar.google.com/'],
+['ThaiJo','วารสารวิชาการไทย','https://www.tci-thaijo.org/th/articles?q=',1,'https://www.tci-thaijo.org/th'],
+['Google Books','หนังสือ ตำรา','https://www.google.com/search?tbm=bks&q=',0,'https://books.google.com/'],
+['CORE','บทความ Open Access','https://core.ac.uk/search?q=',0,'https://core.ac.uk/'],
+['BASE','งานวิชาการทั่วโลก','https://www.base-search.net/Search/Results?lookfor=',0,'https://www.base-search.net/'],
+['OATD','วิทยานิพนธ์ทั่วโลก','https://oatd.org/oatd/search?q=',0,'https://oatd.org/'],
+['PubMed','การแพทย์ สุขภาพ','https://pubmed.ncbi.nlm.nih.gov/?term=',0,'https://pubmed.ncbi.nlm.nih.gov/']
+];
+const draw=()=>{const q=$('q').value.trim();const enc=encodeURIComponent(q);
+$('dbs').innerHTML=DBS.map(d=>`<a class="db${d[3]?' th':''}" target="_blank" rel="noopener" href="${E(q?d[2]+enc:d[4])}"><b>${E(d[0])}</b><span>${E(d[1])}</span></a>`).join('')
++`<a class="db th" target="_blank" rel="noopener" href="https://digiverse.chula.ac.th/"><b>Chula DigiVerse</b><span>ค้นในเว็บ (ช่อง Advanced Search)</span></a>`;
+const w=q.split(/\s+/).filter(Boolean);
+$('syn').innerHTML=w.length>1?`<span>ลองเชื่อมคำ: ${E(w.join(' AND '))}</span><span>"${E(q)}"</span>`:'';
+store.set('q',q)};
+$('q').value=store.get('q','');draw();
+$('q').addEventListener('input',draw);
+$('sf').addEventListener('submit',e=>{e.preventDefault();const q=$('q').value.trim();if(!q){$('q').focus();return}const a=document.createElement('a');a.href=DBS[0][2]+encodeURIComponent(q);a.target='_blank';a.rel='noopener';document.body.appendChild(a);a.click();a.remove()});
+
+const RES=[
+['Chula DigiVerse','https://digiverse.chula.ac.th/',['ไทย','วิทยานิพนธ์','หนังสือ'],1,'คลังดิจิทัลของจุฬาฯ รวมวิทยานิพนธ์อิเล็กทรอนิกส์ โครงงานนิสิต (e-Senior Projects) งานวิจัย e-Book หนังสือหายาก และวิดีโอ Chula e-Lecture','ใช้ Advanced Search กำหนดชื่อเรื่อง คำสำคัญ ปี และสาขาวิชาได้ ดูโครงงานปริญญาตรีเป็นตัวอย่างการเขียนบทที่ 2'],
+['ThaiJo (TCI)','https://www.tci-thaijo.org/th',['ไทย','บทความ'],1,'ระบบวารสารวิชาการไทยออนไลน์ ครอบคลุมทุกสาขา อ่านบทความฉบับเต็มเป็น PDF ได้ฟรี','ค้นด้วยคำภาษาไทยได้ดีมาก ใช้ Advanced Search เลือก Exact phrase เพื่อค้นวลีตรงตัว และใช้ตัวกรองเลือกปีหรือสาขา บทความส่วนใหญ่มีบทคัดย่อภาษาอังกฤษ ช่วยให้ได้คำค้นภาษาอังกฤษเพิ่ม'],
+['Google Scholar','https://scholar.google.com/',['ไทย','ต่างประเทศ','บทความ','วิทยานิพนธ์'],1,'เครื่องมือค้นงานวิชาการจากทั่วโลกในที่เดียว ทั้งบทความ วิทยานิพนธ์ หนังสือ','ใช้เมนูด้านซ้ายกรองปี และกดปุ่ม " (อ้างอิง) ใต้ผลค้นหาเพื่อดูรูปแบบ APA แล้วตรวจกับต้นฉบับอีกครั้ง'],
+['Thammasat Digital Collections','https://digital.library.tu.ac.th/',['ไทย','วิทยานิพนธ์'],0,'คลังวิทยานิพนธ์และเอกสารดิจิทัลของมหาวิทยาลัยธรรมศาสตร์','ดีสำหรับโครงงานด้านสังคมศาสตร์ เศรษฐศาสตร์ และวิศวกรรม'],
+['คลังสารสนเทศมหาวิทยาลัยมหิดล','https://repository.li.mahidol.ac.th/',['ไทย','วิทยานิพนธ์'],0,'วิทยานิพนธ์ สารนิพนธ์ ปริญญานิพนธ์ และผลงานวิจัยของมหิดล','เด่นด้านการแพทย์ สาธารณสุข วิทยาศาสตร์ เหมาะกับโครงงานสุขภาพ'],
+['CORE','https://core.ac.uk/',['ต่างประเทศ','บทความ'],1,'รวมบทความวิจัยแบบเปิด (Open Access) หลายร้อยล้านรายการ ดาวน์โหลดฉบับเต็มได้','เลือกเฉพาะผลที่มีปุ่ม Download เพื่อให้ได้ฉบับเต็มแน่นอน'],
+['DOAJ','https://doaj.org/',['ต่างประเทศ','บทความ'],0,'รายชื่อวารสาร Open Access ที่ผ่านการคัดกรองคุณภาพ','ใช้ตรวจว่าวารสารที่เจอเชื่อถือได้หรือไม่ ถ้าอยู่ใน DOAJ ถือว่าผ่านการคัดกรองมาแล้ว'],
+['BASE','https://www.base-search.net/',['ต่างประเทศ','บทความ','วิทยานิพนธ์'],0,'เครื่องมือค้นงานวิชาการแบบเปิดจากคลังมหาวิทยาลัยทั่วโลก','ติ๊ก Open Access เพื่อแสดงเฉพาะงานที่อ่านได้ฟรี'],
+['PubMed','https://pubmed.ncbi.nlm.nih.gov/',['ต่างประเทศ','บทความ'],0,'ฐานข้อมูลวารสารการแพทย์และวิทยาศาสตร์สุขภาพ','เลือกตัวกรอง Free full text เหมาะกับโครงงานอุปกรณ์การแพทย์และสุขภาพ'],
+['OATD','https://oatd.org/',['ต่างประเทศ','วิทยานิพนธ์'],0,'Open Access Theses and Dissertations รวมวิทยานิพนธ์จากมหาวิทยาลัยกว่าพันแห่ง','ค้นด้วยคำภาษาอังกฤษ ดูบทที่ 2 (Literature Review) ของเขาเป็นตัวอย่าง'],
+['DART-Europe','https://www.dart-europe.org/',['ต่างประเทศ','วิทยานิพนธ์'],0,'คลังวิทยานิพนธ์ระดับปริญญาเอกจากมหาวิทยาลัยในยุโรป','เหมาะเมื่อต้องการงานเชิงลึกด้านเทคโนโลยีและวิศวกรรม'],
+['Harvard DASH','https://dash.harvard.edu/',['ต่างประเทศ','บทความ','วิทยานิพนธ์'],0,'คลังงานวิจัยและวิทยานิพนธ์แบบเปิดของมหาวิทยาลัยฮาร์วาร์ด','ค้นได้ทุกสาขา งานส่วนใหญ่ดาวน์โหลดฉบับเต็มได้'],
+['Project MUSE','https://muse.jhu.edu/',['ต่างประเทศ','บทความ','หนังสือ'],0,'บทความและหนังสือด้านมนุษยศาสตร์และสังคมศาสตร์','กรองเฉพาะ Open Access เพื่ออ่านฟรี'],
+['SSRN','https://www.ssrn.com/',['ต่างประเทศ','บทความ'],0,'คลังบทความวิจัยฉบับร่างด้านสังคมศาสตร์ เศรษฐศาสตร์ กฎหมาย','บางชิ้นยังไม่ผ่านการตีพิมพ์ ควรตรวจว่ามีฉบับตีพิมพ์จริงหรือไม่'],
+['SJR (Scimago)','https://www.scimagojr.com/',['ต่างประเทศ','ตรวจวารสาร'],0,'จัดอันดับคุณภาพวารสารวิชาการ (Q1–Q4)','ใช้ตรวจความน่าเชื่อถือของวารสารต่างประเทศที่เจอ ไม่ใช่ที่อ่านบทความ']
+];
+const F=['ทั้งหมด','แนะนำ ม.4','ไทย','ต่างประเทศ','บทความ','วิทยานิพนธ์','หนังสือ'];
+let f=store.get('f','ทั้งหมด');if(!F.includes(f))f='ทั้งหมด';
+const cat=()=>{$('chips').innerHTML=F.map(x=>`<button type="button" aria-pressed="${x===f}" data-f="${E(x)}">${E(x)}</button>`).join('');
+const L=RES.filter(r=>f==='ทั้งหมด'||(f==='แนะนำ ม.4'?r[3]:r[2].includes(f)));
+$('cat').innerHTML=L.map(r=>`<article class="res"><h3>${E(r[0])}</h3><div class="tags">${r[3]?'<span class="tag star">แนะนำ ม.4</span>':''}${r[2].map(t=>`<span class="tag">${E(t)}</span>`).join('')}</div><p>${E(r[4])}</p><div class="tip">${E(r[5])}</div><a class="go" href="${E(r[1])}" target="_blank" rel="noopener">เปิดเว็บไซต์ →</a></article>`).join('')};
+cat();
+$('chips').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;f=b.dataset.f;store.set('f',f);cat()});
+
+const ids=['t','lg','au','yr','vi','ti','so','pg','url','db'];
+const v=id=>$(id).value.trim();
+const lab={j:['ชื่อวารสาร','ปีที่ (ฉบับที่)','เลขหน้า'],th:['ชื่อมหาวิทยาลัย','ระดับ (เช่น ปริญญาโท)','—'],b:['สำนักพิมพ์','ครั้งที่พิมพ์ (ถ้ามี)','—'],w:['ชื่อเว็บไซต์ / หน่วยงาน','วันที่เผยแพร่ (ถ้ามี)','—']};
+const list=(s,en)=>s.split(en||s.includes(';')?/\s*;\s*/:/\s*,\s*/).filter(Boolean);
+const authors=(s,en)=>{let a=list(s,en);if(!a.length)return en?'Author, A.':'ชื่อ นามสกุล';
+if(a.length>20)return a.slice(0,19).join(', ')+', . . . '+a.at(-1);
+if(en)return a.length===1?a[0]:a.slice(0,-1).join(', ')+', & '+a.at(-1);
+return a.length===1?a[0]:a.length===2?a[0]+' และ'+a[1]:a.slice(0,-1).join(', ')+', และ'+a.at(-1)};
+const sur=(x,en)=>en?x.split(',')[0].trim():x;
+const intext=(s,en,y,ti)=>{const a=list(s,en).map(x=>sur(x,en));let p,n;
+if(!a.length){const t=ti||(en?'Title':'ชื่อเรื่อง');p=n='"'+t+'"'}
+else if(a.length===1)p=n=a[0];
+else if(a.length===2){p=en?a[0]+' & '+a[1]:a[0]+' และ'+a[1];n=en?a[0]+' and '+a[1]:p}
+else p=n=en?a[0]+' et al.':a[0]+' และคณะ';
+return [`(${p}, ${y})`,`${n} (${y})`]};
+const ref=()=>{const t=v('t'),en=v('lg')==='en',[sl,vl,pl]=lab[t];$('sol').textContent=sl;$('vil').textContent=vl;$('pgl').textContent=pl;$('pg').disabled=t!=='j';$('dbw').hidden=t!=='th';$('aul').textContent=en?'ผู้แต่ง เช่น Smith, J. A. (คั่นแต่ละคนด้วย ; )':'ผู้แต่ง ชื่อ นามสกุล (คั่นแต่ละคนด้วย ; )';$('au').placeholder=en?'Smith, J. A.; Lee, K.':'สมชาย ใจดี; สุดา รักเรียน';
+const A=E(authors(v('au'),en)),Y=E(v('yr')||(en?'n.d.':'ม.ป.ป.')),T=E(v('ti')||(en?'Title':'ชื่อเรื่อง')),S=E(v('so')),V=E(v('vi')),P=E(v('pg')),U=E(v('url'));
+let r='';
+if(t==='j'){const m=V.match(/^(\d+)\s*\((.+)\)$/);const vv=m?`<i>${m[1]}</i>(${m[2]})`:(V?`<i>${V}</i>`:'');r=`${A}. (${Y}). ${T}. <i>${S||(en?'Journal Name':'ชื่อวารสาร')}</i>${vv?', '+vv:''}${P?', '+P:''}.`}
+else if(t==='th')r=`${A}. (${Y}). <i>${T}</i> [${V||(en?"Master's thesis":'วิทยานิพนธ์ปริญญามหาบัณฑิต')}, ${S||(en?'University':'ชื่อมหาวิทยาลัย')}].${v('db')?' '+E(v('db'))+'.':''}`;
+else if(t==='b')r=`${A}. (${Y}). <i>${T}</i>${V?` (${en?V+' ed.':'พิมพ์ครั้งที่ '+V})`:''}. ${S||(en?'Publisher':'สำนักพิมพ์')}.`;
+else{const same=S&&v('au')&&v('au').replace(/[;.\s]+$/,'')===v('so');r=`${A}. (${V?Y+', '+V:Y}). <i>${T}</i>.${S&&!same?' '+S+'.':''}`}
+r+=U?' '+U:'';$('ref').innerHTML=r;const c=intext(v('au'),en,v('yr')||(en?'n.d.':'ม.ป.ป.'),v('ti'));$('cit').innerHTML=`ในวงเล็บ: <b>${E(c[0])}</b><br>ในประโยค: <b>${E(c[1])}</b>`;
+const s={};ids.forEach(i=>s[i]=$(i).value);store.set('ref',s)};
+const sv=store.get('ref',{});ids.forEach(i=>{if(sv[i]!=null)$(i).value=sv[i]});
+ids.forEach(i=>$(i).addEventListener('input',ref));ref();
+const msg=t=>{$('okmsg').textContent=t;setTimeout(()=>{$('okmsg').textContent=''},2500)};
+const copy=async(txt,el)=>{try{await navigator.clipboard.writeText(txt);msg('คัดลอกแล้ว')}catch(e){msg('คัดลอกไม่ได้ ให้ลากเลือกข้อความแล้วกด Ctrl+C')}};
+$('cp').addEventListener('click',()=>copy($('ref').textContent));
+$('cp2').addEventListener('click',()=>copy(intext(v('au'),v('lg')==='en',v('yr')||(v('lg')==='en'?'n.d.':'ม.ป.ป.'),v('ti'))[0]));
+
+const ss={get(k){try{return sessionStorage.getItem(k)||''}catch(e){return ''}},set(k,v){try{v?sessionStorage.setItem(k,v):sessionStorage.removeItem(k)}catch(e){}}};
+let who=ss.get('who');
+const key=()=>'log:'+who.toLowerCase();
+const read=()=>{if(!who)return [];const l=store.get(key(),[]);return Array.isArray(l)?l:[]};
+const write=l=>{try{localStorage.setItem(key(),JSON.stringify(l))}catch(e){}};
+const lmsg=t=>{$('logmsg').textContent=t;setTimeout(()=>{if($('logmsg').textContent===t)$('logmsg').textContent=''},3000)};
+const rlog=()=>{const log=read();$('whonow').textContent=who?'กำลังบันทึกของ: '+who+' ('+log.length+' รายการ)':'ยังไม่ได้กรอกชื่อ';
+$('log').innerHTML=!who?'<li class="empty">กรอกชื่อ เลขที่ กลุ่ม แล้วกด "เริ่มใช้" ก่อน</li>':log.length?log.map((x,i)=>`<li><div>${E(x.r)}</div>${x.c?`<div style="font-size:14px;margin-top:4px">อ้างในเนื้อหา: ${E(x.c)}</div>`:''}${x.n?`<div style="color:var(--mut);margin-top:4px">${E(x.n)}</div>`:''}<button type="button" class="x" data-i="${i}" aria-label="ลบรายการ">ลบ</button></li>`).join(''):'<li class="empty">ยังไม่มีบันทึก ลองกรอกข้อมูลอ้างอิงด้านซ้าย แล้วกดบันทึก</li>'};
+const setwho=()=>{const n=$('who').value.trim().replace(/\s+/g,' ');if(!n){lmsg('กรอกชื่อ เลขที่ กลุ่ม ก่อน');$('who').focus();return}who=n;ss.set('who',who);
+const old=store.get('log',null);if(Array.isArray(old)&&old.length){write(read().concat(old));try{localStorage.removeItem('log')}catch(e){}}
+rlog();lmsg('สวัสดี '+who+' เริ่มบันทึกได้เลย')};
+$('who').value=who;
+$('whoset').addEventListener('click',setwho);
+$('who').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();setwho()}});
+const addlog=()=>{if(!who){lmsg('กรอกชื่อ เลขที่ กลุ่ม แล้วกด "เริ่มใช้" ก่อน');msg('กรอกชื่อในช่องบันทึกการอ่านก่อน');$('who').focus();return}
+if(!v('ti')){msg('กรอกชื่อเรื่องก่อน');$('ti').focus();return}
+const log=read();log.push({r:$('ref').textContent,c:intext(v('au'),v('lg')==='en',v('yr')||(v('lg')==='en'?'n.d.':'ม.ป.ป.'),v('ti'))[0],n:$('note').value.trim()});write(log);$('note').value='';rlog();msg('เพิ่มเข้าบันทึกแล้ว ('+log.length+' รายการ)');lmsg('บันทึกแล้ว ('+log.length+' รายการ)')};
+$('add').addEventListener('click',addlog);$('save').addEventListener('click',addlog);
+$('log').addEventListener('click',e=>{const b=e.target.closest('.x');if(!b)return;const log=read();log.splice(+b.dataset.i,1);write(log);rlog()});
+$('cpall').addEventListener('click',async()=>{const log=read();if(!log.length){lmsg('ยังไม่มีบันทึก');return}const s=[...log].sort((a,b)=>a.r.localeCompare(b.r,'th'));
+try{await navigator.clipboard.writeText('บันทึกการอ่านของ '+who+'\n\nบรรณานุกรม\n'+s.map(x=>x.r).join('\n')+'\n\nสาระสำคัญ\n'+log.map((x,i)=>(i+1)+'. '+x.r+'\n   อ้างในเนื้อหา: '+(x.c||'-')+'\n   '+(x.n||'-')).join('\n'));lmsg('คัดลอกแล้ว นำไปวางเก็บได้เลย')}catch(e){lmsg('คัดลอกไม่ได้ ให้ลากเลือกข้อความในรายการแล้วกด Ctrl+C')}});
+let armT;
+$('wipe').addEventListener('click',()=>{const b=$('wipe');if(!b.classList.contains('arm')){b.classList.add('arm');b.textContent='กดอีกครั้งเพื่อยืนยันการลบ';clearTimeout(armT);armT=setTimeout(()=>{b.classList.remove('arm');b.textContent='ล้างข้อมูลของฉันจากเครื่องนี้'},4000);return}
+clearTimeout(armT);b.classList.remove('arm');b.textContent='ล้างข้อมูลของฉันจากเครื่องนี้';
+try{if(who)localStorage.removeItem(key());['ref','ck','q'].forEach(k=>localStorage.removeItem(k))}catch(e){}
+who='';ss.set('who','');ids.forEach(i=>{const el=$(i);if(el.tagName!=='SELECT')el.value=''});$('note').value='';$('who').value='';$('q').value='';draw();ref();
+ck=[];document.querySelectorAll('#cl input').forEach(x=>x.checked=false);sc();rlog();lmsg('ล้างข้อมูลแล้ว เครื่องนี้พร้อมให้คนต่อไปใช้')});
+window.addEventListener('storage',e=>{if(who&&(e.key===key()||e.key===null))rlog()});
+rlog();
+
+const CL=['รู้ว่าใครเป็นผู้เขียน และผู้เขียนหรือหน่วยงานมีความเชี่ยวชาญในเรื่องนี้','เผยแพร่ในวารสาร มหาวิทยาลัย หน่วยงานรัฐ หรือสำนักพิมพ์ที่ตรวจสอบได้','มีปีที่เผยแพร่ และไม่เก่าเกินไปสำหรับเรื่องเทคโนโลยี (ประมาณ 5–10 ปี)','มีการอ้างอิงแหล่งที่มาของข้อมูล ตัวเลข หรือผลการทดลอง','เนื้อหาตรงกับหัวข้อโครงงานของเรา ไม่ใช่แค่ชื่อคล้ายกัน','ข้อมูลตรงกับแหล่งอื่นอย่างน้อย 1 แหล่ง ไม่ใช่โฆษณาหรือความเห็นส่วนตัว'];
+let ck=store.get('ck',[]);if(!Array.isArray(ck))ck=[];
+$('cl').innerHTML=CL.map((c,i)=>`<li><label><input type="checkbox" data-i="${i}" ${ck.includes(i)?'checked':''}><span>${E(c)}</span></label></li>`).join('');
+const sc=()=>{const n=ck.length;$('score').textContent=n>=4?`ผ่าน ${n}/6 ข้อ — ใช้แหล่งนี้ได้`:`ผ่าน ${n}/6 ข้อ — ควรหาแหล่งอื่นเพิ่ม`};
+$('cl').addEventListener('change',e=>{const i=+e.target.dataset.i;ck=e.target.checked?[...ck,i]:ck.filter(x=>x!==i);store.set('ck',ck);sc()});sc();
+}
+</script>
+</body>
+</html>
